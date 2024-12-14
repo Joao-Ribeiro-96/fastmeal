@@ -20,7 +20,7 @@ public class Grupo {
     @ManyToMany
     private List<Usuario> usuarios;
 
-    @ManyToMany(mappedBy = "grupo")
+    @ManyToMany
     private List<Permissao> permissoes;
 
 }

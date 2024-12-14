@@ -32,34 +32,35 @@ public class RestauranteRespositoryImpl implements RestauranteRepositoryQueries 
     @Autowired @Lazy
     private RestauranteRepository restauranteRepository;
 
-    @Override
-    public List<Restaurante> find(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
-
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-
-
-        CriteriaQuery<Restaurante> criteriaQuery = criteriaBuilder.createQuery(Restaurante.class);
-        Root<Restaurante> root = criteriaQuery.from(Restaurante.class); // from Restaurante
-
-        var predicates = new ArrayList<Predicate>();
-
-        if(StringUtils.hasText(nome)){
-            predicates.add(criteriaBuilder.like(root.get("nome"), "%" + nome + "%"));
-        }
-
-        if(taxaFreteFinal != null){
-            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("taxaFrete"), taxaFreteInicial));
-        }
-
-        if(taxaFreteFinal != null){
-            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("taxaFrete"), taxaFreteFinal));
-        }
-
-        criteriaQuery.where(predicates.toArray(new Predicate[0]));
-        TypedQuery<Restaurante> query = entityManager.createQuery(criteriaQuery);
-
-        return query.getResultList();
-    }
+//
+//    @Override
+//    public List<Restaurante> findNomeETaxaFrete(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
+//
+//        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+//
+//
+//        CriteriaQuery<Restaurante> criteriaQuery = criteriaBuilder.createQuery(Restaurante.class);
+//        Root<Restaurante> root = criteriaQuery.from(Restaurante.class); // from Restaurante
+//
+//        var predicates = new ArrayList<Predicate>();
+//
+//        if(StringUtils.hasText(nome)){
+//            predicates.add(criteriaBuilder.like(root.get("nome"), "%" + nome + "%"));
+//        }
+//
+//        if(taxaFreteFinal != null){
+//            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("taxaFrete"), taxaFreteInicial));
+//        }
+//
+//        if(taxaFreteFinal != null){
+//            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("taxaFrete"), taxaFreteFinal));
+//        }
+//
+//        criteriaQuery.where(predicates.toArray(new Predicate[0]));
+//        TypedQuery<Restaurante> query = entityManager.createQuery(criteriaQuery);
+//
+//        return query.getResultList();
+//    }
 
     @Override
     public List<Restaurante> findComFreteGratis(String nome) {

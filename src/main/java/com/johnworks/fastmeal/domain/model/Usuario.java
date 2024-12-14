@@ -30,7 +30,7 @@ public class Usuario {
     private LocalDateTime dataCadastro;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "grupo")// Indica por onde será feita a relação das tabelas. Evita chamada recursiva infinita
+    @ManyToMany// Indica por onde será feita a relação das tabelas. Evita chamada recursiva infinita
     @JoinTable(name = "usuario_grupos",
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "grupo_id"))
