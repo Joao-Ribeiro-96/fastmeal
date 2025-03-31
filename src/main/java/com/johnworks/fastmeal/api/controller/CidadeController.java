@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.johnworks.fastmeal.domain.exception.EntidadeEmUsoException;
 import com.johnworks.fastmeal.domain.exception.EntidadeNaoEncontradaException;
+import com.johnworks.fastmeal.domain.exception.NegocioException;
 import com.johnworks.fastmeal.domain.model.Cidade;
 import com.johnworks.fastmeal.domain.repository.CidadeRepository;
 import com.johnworks.fastmeal.domain.service.CadastroCidadeService;
@@ -57,23 +58,21 @@ public class CidadeController {
 			return ResponseEntity.status(HttpStatus.CREATED)
 					.body(cidade);
 		} catch (EntidadeNaoEncontradaException e) {
-			return ResponseEntity.badRequest()
-					.body(e.getMessage());
+			throw new NegocioException(e.getMessage());
 		}
 	}
 	
 	@PutMapping("/{cidadeId}")
-	public ResponseEntity<?> atualizar(@PathVariable Long cidadeId,
+	public Cidade atualizar(@PathVariable Long cidadeId,
 			@RequestBody Cidade cidade) {
-		try {
+
 			Cidade cidadeAtual = cidadeRepository.getReferenceById(cidadeId);
 				BeanUtils.copyProperties(cidade, cidadeAtual, "id");
-				cidadeAtual = cadastroCidade.salvar(cidadeAtual);
-				return ResponseEntity.ok(cidadeAtual);
-		
-		} catch (EntidadeNaoEncontradaException | EntityNotFoundException e) {
-			return ResponseEntity.badRequest()
-					.body(e.getMessage());
+
+				try{
+					return cadastroCidade.salvar(cidadeAtual);
+		} catch (EntidadeNaoEncontradaException e) {
+			throw new NegocioException(e.getMessage());
 		}
 	}
 	

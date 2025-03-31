@@ -62,8 +62,8 @@ public class RestauranteRespositoryImpl implements RestauranteRepositoryQueries 
 //        return query.getResultList();
 //    }
 
-    @Override
-    public List<Restaurante> findComFreteGratis(String nome) {
-        return restauranteRepository.findAll(comFreteFratis().and(comNomeSemelhante(nome)));
-    }
+    //@Override
+    //public List<Restaurante> findComFreteGratis(String nome) {
+    //    return restauranteRepository.findAll(comFreteFratis().and(comNomeSemelhante(nome)));
+    //}
 }

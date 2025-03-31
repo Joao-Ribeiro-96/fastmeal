@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface RestauranteRepositoryQueries {
 
-    List<Restaurante> findComFreteGratis(String nome);
+    //List<Restaurante> findComFreteGratis(String nome);
 }

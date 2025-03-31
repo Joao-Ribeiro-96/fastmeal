@@ -41,13 +41,9 @@ public class CozinhaController {
 	}
 	
 	@GetMapping("/{cozinhaId}")
-	public ResponseEntity<Cozinha> buscar(@PathVariable Long cozinhaId) {
-		try{
-			Cozinha cozinha = cozinhaRepository.getReferenceById(cozinhaId);
-			return ResponseEntity.ok(cozinha);
-		}catch( EntityNotFoundException ex){
-			   return ResponseEntity.notFound().build();
-		}	
+	public Cozinha buscar(@PathVariable Long cozinhaId) {
+
+			return cadastroCozinha.buscarOuFalhar(cozinhaId);
 
 	}
 	
@@ -58,35 +54,20 @@ public class CozinhaController {
 	}
 	
 	@PutMapping("/{cozinhaId}")
-	public ResponseEntity<Cozinha> atualizar(@PathVariable Long cozinhaId,
+	public Cozinha atualizar(@PathVariable Long cozinhaId,
 			@RequestBody Cozinha cozinha) {
-		try{
-			Cozinha cozinhaAtual = cozinhaRepository.getReferenceById(cozinhaId);
-			BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
-			cozinhaAtual = cadastroCozinha.salvar(cozinhaAtual);
-			return ResponseEntity.ok(cozinhaAtual);
 
-		}
-		catch( EntityNotFoundException ex){
-			return ResponseEntity.notFound().build();
-		}
+			Cozinha cozinhaAtual = cadastroCozinha.buscarOuFalhar(cozinhaId);
+			BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
+			return cadastroCozinha.salvar(cozinhaAtual);
+
 
 	}
 	
 	@DeleteMapping("/{cozinhaId}")
-	public ResponseEntity<?> remover(@PathVariable Long cozinhaId) {
-		try {
-
+	public void remover(@PathVariable Long cozinhaId) {
 			cadastroCozinha.excluir(cozinhaRepository.getReferenceById(cozinhaId).getId());
-			return ResponseEntity.noContent().build();
-			
-		} catch (EntidadeNaoEncontradaException e) {
-			return ResponseEntity.notFound().build();
-			
-		} catch (EntidadeEmUsoException e) {
-			return ResponseEntity.status(HttpStatus.CONFLICT)
-					.body(e.getMessage());
-		}
+
 	}
 
 	@GetMapping("/cozinha/buscar-primeirp")

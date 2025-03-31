@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/teste")
+@RequestMapping("/testes")
 public class TesteController {
 
     @Autowired
@@ -52,19 +52,19 @@ public class TesteController {
     public List<Restaurante> restaurantePorNomeTop2(String nome){
         return restauranteRepository.findTop2ByNomeContaining(nome);
     }
-    @GetMapping("/restaurantePorNomeTop2")
+    @GetMapping("/restaurantePorNomeTop23")
     public int countPorCozinha(Long cozinhaId){
         return restauranteRepository.countByCozinhaId(cozinhaId);
     }
 
-    @GetMapping("/restaurantes/com-frete-gratis")
-    public List<Restaurante> restaurantesComFreteGratis(String nome){
+   // @GetMapping("/restaurantes/com-frete-gratis")
+   // public List<Restaurante> restaurantesComFreteGratis(String nome){
         //var comFreteGratis = new ResturanteComFreteGratisSpec();
         //var comNomeSemelhante = new RestauranteComNomeSemelhanteSpec(nome);
         //return restauranteRepository.findAll(comFreteFratis().and(comNomeSemelhante(nome)));
 
-        return restauranteRepository.findComFreteGratis(nome);
-    }
+    //    return restauranteRepository.findComFreteGratis(nome);
+    //}
 
     @GetMapping("/restaurantes/buscar-primeirp")
     public Optional<Restaurante> restaurantesBuscarPrimeiro(){
